@@ -1,96 +1,38 @@
-
 body {
-    font-family: serif;
-    background-color: rgb(151, 86, 131);
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    font-size: 18px;
+  font-family: sans-serif;
+  background-color: #e4abd7;
+  margin: 20px;
 }
 
-
-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+.rettangolo {
+  background-color: #ffdbed;
+  border: 6px solid #d48aa3;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
 }
-
-
-h1 {
-    text-align: center;
-    background-color: rgb(217, 165, 208);
-    max-width: 520px;
-    padding: 18px;
-    border-radius: 24px;
-    margin: 30px auto;
-}
-
-
-.container{
-    width: 90%;
-    max-width: 640px;
-    box-sizing: border-box;
-    margin: 10px auto;
-}
-
 
 h2 {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #fff;
+  color: #d48aa3;
 }
 
-
-input[type="text"],
-input[type="number"],
-select {
-    text-align: center;
-    background-color: rgb(224, 169, 195);
-    padding: 12px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 6px;
-    width: 100%; 
-    font-size: 16px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    color: #000;
+input[type="number"] {
+  width: 80px;
+  padding: 5px;
+  margin-right: 10px;
+  border: 4px solid #d48aa3;
+  border-radius: 5px;
 }
-
-
-input[type="checkbox"],
-input[type="radio"] {
-    text-align: center;
-}
-
 
 button {
-    background-color: rgb(217, 165, 208);
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #fff;
-    font-weight: 600;
-    margin-top: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 16px;
+  padding: 8px 15px;
+  background-color: #d48aa3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: rgb(200, 145, 185);
-}
-
-
-pre#risultati {
-    background-color: rgba(255,255,255,0.2);
-    padding: 18px;
-    border-radius: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 15px;
+  background-color: #a7647a;
 }

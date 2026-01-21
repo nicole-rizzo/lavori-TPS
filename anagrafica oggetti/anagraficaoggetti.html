@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Anagrafica semplice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+Nome: <input id="nome"><br>
+Cognome: <input id="cognome"><br>
+Colore: <input id="colore"><br><br>
+
+<button onclick="inserisci()">Inserisci</button>
+<button onclick="mostra()">Mostra</button>
+
+<pre id="risultato"></pre>
+
+<script>
+
+    const persona = [];
+
+    function inserisci() {
+        const oggetto = {
+            nome: document.getElementById("nome").value,
+            cognome: document.getElementById("cognome").value,
+            colore: document.getElementById("colore").value
+        };
+
+        persona.push(oggetto);
+
+        
+        document.getElementById("nome").value = "";
+        document.getElementById("cognome").value = "";
+        document.getElementById("colore").value = "";
+    }
+
+    function mostra() {
+        let testo = "";
+
+        for (let i = 0; i < persona.length; i++) {
+            testo +=
+                "Nome: " + persona[i].nome + "\n" +
+                "Cognome: " + persona[i].cognome + "\n" +
+                "Colore: " + persona[i].colore + "\n\n";
+        }
+
+        document.getElementById("risultato").innerText = testo;
+    }
+</script>
+
+</body>
+</html>

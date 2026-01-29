@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ricezione dati</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+
+<body>
+
+    <h2>Dati ricevuti!!</h2>
+
+    <table id="tabella1">
+    </table>
+
+    <script>
+
+        s = "";
+
+        var url = document.location.search.substring(1);
+
+        var url1 = url.split("&")[0];
+        var url2 = url.split("&")[1];
+        var url3 = url.split("&")[2];
+
+        var nome = url1.substr(5);
+        var cognome = url2.substr(8);
+        var colore = url3.substr(7);
+
+        s = s + "<tr><th>Nome</th><th>Cognome</th><th>Colore</th></tr>";
+        s = s + "<td>" + nome + "</td>";
+        s = s + "<td>" + cognome + "</td>";
+        s = s + "<td>" + colore + "</td>";
+        
+
+        document.getElementById("tabella1").innerHTML = s;
+
+    </script>
+
+</body>
+</html>

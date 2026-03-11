@@ -1,29 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lavori di TPS di Nicole Rizzo</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
     <style>
+      /* SFONDO CON GRADIENTE ROSA */
       body {
-        background-color: #a7647a;
-        font-family: serif;
-        padding: 10px;
+        background: linear-gradient(135deg, #fff0f5 0%, #fce4ec 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        min-height: 100vh;
+        padding-top: 50px;
+        color: #4a1a33;
       }
+
+      .container {
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.5); /* Effetto vetro opaco */
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+
+      /* TITOLO */
+      h2 {
+        color: #c2185b;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #f8bbd0;
+        padding-bottom: 20px;
+      }
+
+      /* LISTA DEI LAVORI (I LINK) */
+      .list-group {
+        box-shadow: none;
+      }
+
       .list-group-item {
-        margin-bottom: 60px;
+        margin-bottom: 15px; /* Spazio tra i bottoni */
+        border-radius: 15px !important; /* Arrotondati */
+        border: 1px solid #f8bbd0 !important;
+        background-color: #ffffff;
+        color: #ad1457 !important;
+        font-weight: 500;
+        text-align: center;
+        transition: all 0.3s ease; /* Animazione fluida */
+        padding: 15px;
+      }
+
+      /* EFFETTO QUANDO CI PASSI SOPRA */
+      .list-group-item:hover {
+        background-color: #f06292 !important; /* Diventa rosa acceso */
+        color: white !important;
+        transform: translateY(-3px); /* Si alza leggermente */
+        box-shadow: 0 5px 15px rgba(240, 98, 146, 0.4);
+        text-decoration: none;
+      }
+
+      /* FOOTER PERSONALIZZATO */
+      .footer-name {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #ba6b8e;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
-      <h2 class="text-center">Lavori di TPS di Rizzo Nicole</h2>
-      <br>
-
+    <div class="container text-center">
+      <h2>Portfolio TPS</h2>
+      
       <div class="list-group">
         <a href="anagrafica/anagrafic1.html" class="list-group-item">Anagrafica 1.1</a>
         <a href="anagrafica2.0/anagrafic2.html" class="list-group-item">Anagrafica 2.0</a>
@@ -33,12 +85,13 @@
         <a href="calcolatrice/calcolatrice.html" class="list-group-item">Calcolatrice</a>
         <a href="LocalStorage/local.html" class="list-group-item">Dati tramite LocalStorage</a>
         <a href="url/mittente.html" class="list-group-item">Dati tramite URL</a>
-        <a href="csv/index.html" class="list-group-item">File CSV</a>
+        <a href="csv/index.html" class="list-group-item">Archivio File CSV (Poeti)</a>
       </div>
-    </div>
-  </body>
-</html>
 
+      <p class="footer-name">Nicole Rizzo &copy; 2024</p>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </body>
 </html>

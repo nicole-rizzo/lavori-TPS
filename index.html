@@ -7,67 +7,85 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
     <style>
-      
       body {
-        background: linear-gradient(135deg, #fff0f5 0%, #fce4ec 100%);
-        font-family: 'Segoe UI', Arial, sans-serif;
+        /* Gradiente più luminoso e moderno */
+        background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        background-attachment: fixed;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         min-height: 100vh;
-        padding-top: 50px;
+        display: flex;
+        align-items: center; /* Centra verticalmente il contenuto */
+        justify-content: center;
+        margin: 0;
         color: #4a1a33;
       }
 
       .container {
-        max-width: 600px;
-        background-color: rgba(255, 255, 255, 0.5); /* Effetto vetro opaco */
+        max-width: 500px;
+        /* Effetto vetro smerigliato (Glassmorphism) */
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         padding: 40px;
-        border-radius: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
       }
 
-      
       h2 {
         color: #c2185b;
-        font-weight: 300;
+        font-weight: 700; /* Testo più marcato */
         text-transform: uppercase;
-        letter-spacing: 3px;
-        margin-bottom: 40px;
-        border-bottom: 1px solid #f8bbd0;
-        padding-bottom: 20px;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+        position: relative;
       }
 
-      
+      /* Sottolineatura carina sotto il titolo */
+      h2::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #f06292;
+        margin: 10px auto;
+        border-radius: 2px;
+      }
+
       .list-group {
         box-shadow: none;
+        margin-top: 20px;
       }
 
       .list-group-item {
-        margin-bottom: 15px; 
-        border-radius: 15px !important; 
-        border: 1px solid #f8bbd0 !important;
-        background-color: #ffffff;
+        margin-bottom: 12px; 
+        border-radius: 20px !important; /* Bordi molto arrotondati */
+        border: none !important;
+        background-color: rgba(255, 255, 255, 0.9);
         color: #ad1457 !important;
         font-weight: 500;
-        text-align: center;
-        transition: all 0.3s ease; 
-        padding: 15px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        padding: 12px 20px;
+        display: block;
+        text-decoration: none !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
       }
 
-      
+      /* Effetto al passaggio del mouse: si alza e cambia colore */
       .list-group-item:hover {
-        background-color: #f06292 !important; 
+        background-color: #c2185b !important; 
         color: white !important;
-        transform: translateY(-3px); 
-        box-shadow: 0 5px 15px rgba(240, 98, 146, 0.4);
-        text-decoration: none;
+        transform: scale(1.05); /* Si ingrandisce leggermente */
+        box-shadow: 0 10px 20px rgba(194, 24, 91, 0.2);
       }
 
-      
       .footer-name {
         margin-top: 30px;
-        font-size: 12px;
-        color: #ba6b8e;
+        font-size: 11px;
+        color: #9e9e9e;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
+        opacity: 0.8;
       }
     </style>
   </head>
@@ -86,6 +104,7 @@
         <a href="LocalStorage/local.html" class="list-group-item">Dati tramite LocalStorage</a>
         <a href="url/mittente.html" class="list-group-item">Dati tramite URL</a>
         <a href="csv/index.html" class="list-group-item">Archivio File CSV </a>
+        <a href="pcto/iondex.html" class="list-group-item">Lavoro svolto in alternanza scuola.lavoro</a>
       </div>
 
       <p class="footer-name">Nicole Rizzo &copy; 2025/2026</p>

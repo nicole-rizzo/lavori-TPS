@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio - NIC RIZ SHOP</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .scheda-prodotto { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; justify-content: center !important; background: white !important; border-radius: 30px !important; padding: 30px !important; gap: 30px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; overflow: visible !important; }
+        .box-immagine { flex: 1 !important; min-width: 300px !important; max-width: 500px !important; height: 500px !important; background: #f9f9f9 !important; border-radius: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 20px !important; border: 1px solid #eee !important; }
+        .img-dettaglio { max-width: 100% !important; max-height: 100% !important; width: auto !important; height: auto !important; object-fit: contain !important; display: block !important; }
+        .box-testi { flex: 1 !important; min-width: 300px !important; padding: 20px !important; }
+        .prezzo-grande { font-size: 3.5rem !important; color: #f25c7d !important; font-weight: bold !important; margin: 20px 0 !important; }
+        @media (max-width: 800px) { .scheda-prodotto { flex-direction: column !important; } .box-immagine { width: 100% !important; height: 300px !important; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DETTAGLIO ARTICOLO</h1>
+        <p style="color: #f25c7d; font-weight: bold; font-size: 0.8rem; margin-top: 5px;">
+            Nuovo Inventario Casuale: Rifiuti Inutili e Zozzi
+        </p>
+        <a href="index.html" style="color:#f25c7d; font-weight:bold; text-decoration:none; display:inline-block; margin-top:10px;">⬅ Torna al baratro</a>
+    </header>
+
+    <div class="container">
+        <div class="scheda-prodotto">
+            
+            <div class="box-immagine">
+                <img id="f-img" class="img-dettaglio" src="" alt="Caricamento...">
+            </div>
+
+            <div class="box-testi">
+                <h2 id="f-ma" style="color:#f25c7d; font-size:2.5rem; text-transform: uppercase; margin:0;"></h2>
+                <h3 id="f-mo" style="font-size:1.5rem; color:#666; margin-bottom: 20px; font-weight: normal;"></h3>
+                
+                <div style="background: #fff5f7; padding: 20px; border-radius: 15px; border-left: 5px solid #ff85a2;">
+                    <p id="f-de" style="line-height:1.6; font-style: italic; color: #444; margin:0;"></p>
+                </div>
+
+                <p id="f-pr" class="prezzo-grande"></p>
+                
+                <button onclick="aggiungi()" style="width:100%; padding: 20px; font-size: 1.2rem; cursor: pointer; background:#f25c7d; color:white; border:none; border-radius:50px; font-weight:bold;">
+                    AGGIUNGI AL CARRELLO!!! 🛍️
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var prodottoString = localStorage.getItem("prodottoSelezionato");
+        var p = JSON.parse(prodottoString);
+
+        document.getElementById("f-ma").innerText = p.ma;
+        document.getElementById("f-mo").innerText = p.mo;
+        document.getElementById("f-de").innerText = p.de;
+        document.getElementById("f-pr").innerText = p.pr + " €";
+        document.getElementById("f-img").src = p.im;
+
+        function aggiungi() {
+            var basketString = localStorage.getItem("carrello");
+            var basket = [];
+            if (basketString != null && basketString != "") {
+                basket = JSON.parse(basketString);
+            }
+            
+            var nuovoOggetto = { 
+                marca: p.ma, 
+                modello: p.mo, 
+                prezzo: p.pr 
+            };
+            
+            basket.push(nuovoOggetto);
+            localStorage.setItem("carrello", JSON.stringify(basket));
+            alert("Aggiunto!");
+            window.location.href = "carrello.html";
+        }
+    </script>
+</body>
+</html>

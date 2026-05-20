@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - NIC RIZ SHOP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+    <div class="card" style="width:450px;padding:40px;text-align:center;">
+        <h1>NIC RIZ SHOP</h1>
+        <p style="color: #f25c7d; font-weight: bold; font-size: 0.9rem; margin-top: 5px; letter-spacing: 1px;">
+            Nuovo Inventario Casuale: Rifiuti Inutili e Zozzi
+        </p>
+        
+        <div style="margin: 25px 0; border-top: 1px solid #ffe0e6; border-bottom: 1px solid #ffe0e6; padding: 15px 0;">
+            <p class="motto" style="font-size: 1.1rem; line-height: 1.4;">
+                "Cose che non sapevi di volere e che continuerai a non volere dopo averle ricevute."
+            </p>
+        </div>
+
+        <input id="user" type="text" placeholder="Come ti chiami?" 
+               style="width:100%;padding:15px;border-radius:15px;border:1px solid #ffb1bd;outline:none;font-size:1rem;">
+        
+        <button onclick="entra()" style="margin-top:25px;width:100%;padding:15px;font-size:1.1rem;">
+            ENTRA NELLO SHOP
+        </button>
+    </div>
+
+    <script>
+        function entra() {
+            var campoNome = document.getElementById("user");
+            var nome = campoNome.value.trim(); 
+            
+            if (nome != "") {
+                sessionStorage.setItem("utente", nome);
+                window.location.href = "index.html";
+            } else { 
+                alert("Devi dirci chi sei per procedere all'acquisto!"); 
+            }
+        }
+    </script>
+</body>
+</html>

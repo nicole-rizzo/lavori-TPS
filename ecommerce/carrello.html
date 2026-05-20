@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrello - NIC RIZ SHOP</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>IL TUO CARRELLO 🛒</h1>
+        <a href="index.html" style="color:#f25c7d; font-weight:bold; text-decoration:none;">⬅ Torna allo Shop</a>
+    </header>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Oggetto inutile</th>
+                    <th>Modello disastro</th>
+                    <th>Costo disagio</th>
+                    <th>Azione</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabella"></tbody>
+        </table>
+        <div style="text-align:right; margin-top:30px;">
+            <h2 id="tot" style="color:#f25c7d; font-size: 2.5rem;"></h2>
+            <button onclick="stampaScontrino()" style="width:auto; padding:20px 60px;">CONFERMA IL DISASTRO (PDF)</button>
+        </div>
+    </div>
+
+    <script>
+        function mostraCarrello() {
+            var carrelloString = localStorage.getItem("carrello");
+            var carrello = [];
+            if (carrelloString != null && carrelloString != "") {
+                carrello = JSON.parse(carrelloString);
+            }
+            
+            var html = "";
+            var totale = 0;
+
+            for (var i = 0; i < carrello.length; i++) {
+                var item = carrello[i];
+                
+                var prezzoStringa = item.prezzo.toString();
+                var prezzoPulito = prezzoStringa.replace(",", ".");
+                var p = parseFloat(prezzoPulito);
+                if (isNaN(p)) {
+                    p = 0;
+                }
+                totale = totale + p;
+
+                html = html + "<tr>" +
+                            "<td>" + item.marca + "</td>" +
+                            "<td>" + item.modello + "</td>" +
+                            "<td>" + item.prezzo + " €</td>" +
+                            "<td><button onclick='rimuoviOggetto(" + i + ")' style='width:auto; padding:5px 10px; background:#666;'>RIMUOVI</button></td>" +
+                        "</tr>";
+            }
+
+            if (html == "") {
+                html = "<tr><td colspan='4'>Carrello vuoto!</td></tr>";
+            }
+
+            document.getElementById("corpoTabella").innerHTML = html;
+            document.getElementById("tot").innerText = "Totale: " + totale.toFixed(2) + " €";
+        }
+
+        function rimuoviOggetto(i) {
+            var carrelloString = localStorage.getItem("carrello");
+            var c = [];
+            if (carrelloString != null && carrelloString != "") {
+                c = JSON.parse(carrelloString);
+            }
+            c.splice(i, 1);
+            localStorage.setItem("carrello", JSON.stringify(c));
+            mostraCarrello();
+        }
+
+        function stampaScontrino() {
+            var carrelloString = localStorage.getItem("carrello");
+            var carrello = [];
+            if (carrelloString != null && carrelloString != "") {
+                carrello = JSON.parse(carrelloString);
+            }
+            
+            if (carrello.length == 0) {
+                alert("Il carrello è vuoto! Non puoi comprare il nulla.");
+                return;
+            }
+
+            if (!window.jspdf) {
+                alert("Errore libreria di stampa PDF.");
+                return;
+            }
+
+            var jsPDF = window.jspdf.jsPDF;
+            var doc = new jsPDF();
+            var utente = sessionStorage.getItem("utente");
+            if (utente == null || utente == "") {
+                utente = "senzaNome";
+            }
+            var totale = 0;
+
+            doc.setTextColor(242, 92, 125); 
+            doc.setFontSize(24);
+            doc.text("NIC RIZ SHOP", 105, 20, { align: "center" });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text("Nuovo Inventario Casuale: Rifiuti Inutili e Zozzi", 105, 27, { align: "center" });
+            doc.line(20, 35, 190, 35);
+
+            doc.setTextColor(0);
+            doc.setFontSize(12);
+            doc.text("Ricevuta per: " + utente, 20, 45);
+            
+            var oggi = new Date();
+            var dataFormattata = oggi.toLocaleDateString();
+            doc.text("Data del disastro: " + dataFormattata, 20, 52);
+
+            var y = 70;
+            doc.setFont("helvetica", "bold");
+            doc.text("Articolo Inutile", 20, y);
+            doc.text("Prezzo", 170, y);
+            doc.line(20, y + 2, 190, y + 2);
+            
+            y = y + 12;
+            doc.setFont("helvetica", "normal");
+            
+            for (var j = 0; j < carrello.length; j++) {
+                var prezzoTesto = carrello[j].prezzo.toString();
+                prezzoTesto = prezzoTesto.replace("€", "");
+                prezzoTesto = prezzoTesto.replace(",", ".");
+                prezzoTesto = prezzoTesto.trim();
+                
+                var prezzoNum = parseFloat(prezzoTesto);
+                if (isNaN(prezzoNum)) {
+                    prezzoNum = 0;
+                }
+                
+                doc.text(carrello[j].marca + " " + carrello[j].modello, 20, y);
+                doc.text(prezzoNum.toFixed(2) + " €", 170, y);
+                
+                totale = totale + prezzoNum;
+                y = y + 10;
+
+                if (y > 270) { 
+                    doc.addPage(); 
+                    y = 20; 
+                }
+            }
+
+            doc.line(20, y, 190, y);
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(242, 92, 125);
+            doc.text("TOTALE DANNO: " + totale.toFixed(2) + " €", 180, y + 15, { align: "right" });
+
+            doc.setFontSize(10);
+            doc.setTextColor(150);
+            doc.text("Grazie per aver buttato i tuoi soldi con NIC RIZ!", 105, 285, { align: "center" });
+
+            doc.save("Scontrino_NICRIZ_SHOP.pdf");
+            
+            alert("Ricevuta generata! Il carrello verrà svuotato.");
+            localStorage.removeItem("carrello");
+            window.location.href = "index.html";
+        }
+
+        mostraCarrello();
+    </script>
+</body>
+</html>

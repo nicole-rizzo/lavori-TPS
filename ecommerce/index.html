@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>NIC RIZ SHOP - Catalogo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>NIC RIZ SHOP</h1>
+        <p style="color: #f25c7d; font-weight: bold; font-size: 0.8rem; margin-top: 5px;">
+            Nuovo Inventario Casuale: Rifiuti Inutili e Zozzi
+        </p>
+        <p id="saluto" style="margin-top:10px; font-weight:bold; color: #444;"></p>
+        
+        <div class="nav-tools">
+            <div style="margin-bottom: 10px;">
+                <span style="font-size: 11px; font-weight: bold; color: #666;">SCARICA CATALOGHI:</span>
+                <a href="auto.csv" download class="btn-tool" style="background:#888; font-size: 11px;">Auto</a>
+                <a href="moto.csv" download class="btn-tool" style="background:#888; font-size: 11px;">Moto</a>
+                <a href="borse.csv" download class="btn-tool" style="background:#888; font-size: 11px;">Borse</a>
+                <a href="tacchi.csv" download class="btn-tool" style="background:#888; font-size: 11px;">Scarpe</a>
+            </div>
+
+            <label for="fileCsv" class="btn-tool" style="background:#ff85a2;">
+                CARI-CAOS (Carica CSV)
+            </label>
+            <input type="file" id="fileCsv" accept=".csv" onchange="leggiFile()" style="display:none;">
+            
+            <button onclick="svuotaCatalogo()" class="btn-tool" style="background:#ccc; color:#333;">
+                Pulisci Shop
+            </button>
+            
+            <a href="carrello.html" style="text-decoration:none; color:#f25c7d; font-weight:bold; margin-left:20px;">
+                🛒 DISASTRI!
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="vetrina" class="grid"></div>
+    </div>
+
+    <script>
+        var listaProdotti = [];
+
+        function inizializza() {
+            var utente = sessionStorage.getItem("utente");
+            if (utente == null || utente == "") {
+                utente = "senzaNome";
+            }
+            document.getElementById("saluto").innerText = "Benvenuto da NIC RIZ SHOP, " + utente + "!";
+
+            var catalogoSalvato = localStorage.getItem("catalogoSalvato");
+            if (catalogoSalvato != null && catalogoSalvato != "") {
+                listaProdotti = JSON.parse(catalogoSalvato);
+            }
+            if (listaProdotti.length > 0) {
+                stampaGriglia();
+            }
+        }
+
+        function leggiFile() {
+            var inputFile = document.getElementById("fileCsv");
+            if (inputFile.files.length == 0) {
+                return;
+            }
+            var file = inputFile.files[0];
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var contenuto = e.target.result;
+                var righe = contenuto.split("\n"); 
+                listaProdotti = [];
+
+                for (var i = 1; i < righe.length; i++) {
+                    var riga = righe[i].trim();
+                    if (riga == "") {
+                        continue;
+                    }
+                    
+                    var c = riga.split(",");
+                    if (c.length >= 5) {
+                        var nuovoProdotto = { 
+                            ma: c[0].trim(), 
+                            mo: c[1].trim(), 
+                            de: c[2].trim(), 
+                            im: c[3].trim(), 
+                            pr: c[4].trim()
+                        };
+                        listaProdotti.push(nuovoProdotto);
+                    }
+                }
+                localStorage.setItem("catalogoSalvato", JSON.stringify(listaProdotti));
+                stampaGriglia();
+            };
+            reader.readAsText(file);
+        }
+
+        function stampaGriglia() {
+            var htmlRisultato = "";
+            
+            for (var i = 0; i < listaProdotti.length; i++) {
+                var p = listaProdotti[i];
+                
+                htmlRisultato = htmlRisultato + 
+                    '<div class="card">' +
+                        '<img src="' + p.im + '">' +
+                        '<h3>' + p.ma + '</h3>' +
+                        '<p style="font-style:italic; color:#888;">' + p.mo + '</p>' +
+                        '<p class="prezzo">' + p.pr + ' €</p>' +
+                        '<button onclick="vai(' + i + ')">VALUTA IL DANNO</button>' +
+                    '</div>';
+            }
+            
+            document.getElementById("vetrina").innerHTML = htmlRisultato;
+        }
+
+        function vai(indice) {
+            var prodottoScelto = listaProdotti[indice];
+            localStorage.setItem("prodottoSelezionato", JSON.stringify(prodottoScelto));
+            window.location.href = "dettaglio.html";
+        }
+
+        function svuotaCatalogo() {
+            var conferma = confirm("Vuoi davvero svuotare tutto?");
+            if (conferma) {
+                localStorage.removeItem("catalogoSalvato");
+                location.reload();
+            }
+        }
+
+        inizializza();
+    </script>
+</body>
+</html>

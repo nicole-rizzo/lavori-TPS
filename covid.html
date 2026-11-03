@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabella COVID-19 Nazionale</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #fc94c8;
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      background-color: #f1d3e9;
+    }
+
+    td {
+      background-color: #ffebf5;
+    }
+
+  </style>
+</head>
+<body>
+  <h2>Andamento Nazionale COVID-19</h2>
+  <p> dati estrapolati da un file Json</p>
+  <button onclick="caricaDati()">Carica Tabella</button>
+  <table id="tabella">
+    <thead id="intestazioneTabella"></thead>
+    <tbody id="corpoTabella"></tbody>
+  </table>
+  <script>
+    function caricaDati() {
+    const xhr = new XMLHttpRequest();
+    const url = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json";
+    
+    xhr.open("GET", url, true);
+    xhr.responseType = "json";
+    xhr.onreadystatechange = function() {
+    
+    const obj = xhr.response;
+    const numeroChiavi = Object.keys(obj).length;
+    
+    if (numeroChiavi > 0) {
+      const keys = Object.keys(obj[0]);
+      const thead = document.getElementById("intestazioneTabella");
+      const tbody = document.getElementById("corpoTabella");
+      
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+      
+      const rigaHead = document.createElement("tr");
+      
+      for (let i = 0; i < keys.length; i++) {
+        const th = document.createElement("th");
+        th.textContent = keys[i];
+        rigaHead.appendChild(th);
+      }
+
+      thead.appendChild(rigaHead);
+      
+      for (let i = 0; i < obj.length; i++) {
+        const riga = document.createElement("tr");
+        const elementoGiorno = obj[i];
+        for (let j = 0; j < keys.length; j++) {
+          const cella = document.createElement("td");
+          const nomeChiave = keys[j];            
+          cella.textContent = elementoGiorno[nomeChiave];
+          riga.appendChild(cella);
+        }
+        tbody.appendChild(riga);
+      }
+
+    }
+  }
+  xhr.send();
+  }
+  </script>
+</body>
+</html>

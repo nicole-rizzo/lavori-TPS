@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Convertitore Valute BCE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="carica()">
+    <div class="card">
+        <h2>Convertitore BCE</h2>
+        <div class="form-group">
+            <label for="valuta">Seleziona la valuta:</label>
+            <select id="valuta"></select>
+        </div>
+        <div class="form-group">
+            <label for="quantita">Quantità:</label>
+            <input type="number" id="quantita" value="1" step="any">
+        </div>
+        <button onclick="converti()">Converti in Euro</button>
+        <div id="risultato"></div>
+    </div>
+<script>
+function carica() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://proxy.cors.dev/https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml", true);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myFunction(this);
+        }
+    };
+    xhttp.send();
+}
+function myFunction(xml) {
+    var xmlDoc = xml.responseXML;
+    var cubes = xmlDoc.getElementsByTagName("Cube");
+    var select = document.getElementById("valuta");
+    var optionEuro = document.createElement("option");
+    optionEuro.value = "1";
+    optionEuro.text = "EUR - Euro (1)";
+    select.appendChild(optionEuro);
+    for (var i = 0; i < cubes.length; i++) {
+        var currency = cubes[i].getAttribute("currency");
+        var rate = cubes[i].getAttribute("rate");
+        if (currency && rate) {
+            var opt = document.createElement("option");
+            opt.value = rate;
+            opt.text = currency + " (Tasso: " + rate + ")";
+            select.appendChild(opt);
+        }
+    }
+}
+function converti() {
+    var quantita = parseFloat(document.getElementById("quantita").value);
+    var select = document.getElementById("valuta");
+    var rate = parseFloat(select.value);
+    if (quantita <= 0 || !quantita) {
+        risultato.innerHTML = "Quantità non valida!";
+        return;
+    }
+    var euro = quantita / rate;
+    document.getElementById("risultato").innerHTML = 
+    quantita + " valuta estera corrispondono a <b>" + euro.toFixed(2) + " €</b>";
+}
+</script>
+</body>
+</html>
